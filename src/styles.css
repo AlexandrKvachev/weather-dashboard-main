@@ -15,9 +15,9 @@
     gap: 10px;
 }
 
-.fetch-button {
+.fetch-button, .cat-button {
     height: 35px;
-    width: 50px;
+    width: 60px;
     border-radius: 20px;
     color: #4a5b7e;
     background-color: #1c2945;
@@ -28,9 +28,40 @@
     background-color: #4a5b7e;
 }
 
+.date-string {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    color: white;
+}
+
+.weekday-day {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weekday-display {
+    font-size: large;
+    font-weight: bold;
+}
+
+.month-display {
+    font-size: small;
+}
+
+.time-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 36px;
+    width: 36px;
+}
+
 .weather-and-image {
     display: flex;
     flex-direction: row;
+    gap: 80px;
 }
 
 .content {
@@ -78,8 +109,17 @@
     align-items: center;
     background-color: #141d30;
     color: white;
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 300px;
     border-radius: 20px;
+}
+
+.cat-fact {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
