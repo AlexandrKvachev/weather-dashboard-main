@@ -6,9 +6,11 @@ const main = () => {
         const res = await getWeather()
         console.log(res)
         const location = document.querySelector(".location")
-        const content = document.querySelector(".content")
+        const contentTemp = document.querySelector(".content-temperature")
+        const contentTempRange = document.querySelector(".content-temp-range")
+        const contentWeather = document.querySelector(".content-weather")
         const weatherIcon = document.querySelector(".weather-icon") 
-        const timeDisplay = document.querySelector(".time-display")
+        const contentFeels = document.querySelector(".content-feels-like")
         const weekdayDisplay = document.querySelector(".weekday-display")
         const monthDisplay = document.querySelector(".month-display")
         const weather = res.weather[0].main.toLowerCase()
@@ -28,43 +30,50 @@ const main = () => {
             year: 'numeric',
         }).format(date)
 
-        const hours = date.getUTCHours().toString().padStart(2, '0')
-        const minutes = date.getMinutes().toString().padStart(2, '0')
-
-        const time = `${hours}:${minutes}`
         const weekday = new Intl.DateTimeFormat('en-En', {
             weekday: 'long'
         }).format(date)
 
+        const feels = Math.round(res.main.feels_like)
+        const maxRange = Math.round(res.main.temp_max)
+        const minRange = Math.round(res.main.temp_min)
 
-        timeDisplay.textContent = `${time} `
         weekdayDisplay.textContent = `${weekday} `
         monthDisplay.textContent = `${curDay}.` + `${curMonth}.` + `${curYear}`
 
 
 
         location.textContent = `${curLocation} ` 
-        content.textContent = `Current temperature is ${temp}°C, ` + `and the weather is ${weather}`
+        contentFeels.textContent = `feels like ${feels}`
+        contentTemp.textContent = `${temp}°C`
+        contentTempRange.textContent = `High: ${maxRange} Low: ${minRange}` 
 
         if (weather === "clouds") {
             weatherIcon.src = "./assets/clouds.gif"
             weatherIcon.classList.add("weather-icon-clouds")
+            contentWeather.textContent = "Cloudy"
         } else if (weather === "rain") {
             weatherIcon.src = "./assets/rain.gif"
             weatherIcon.classList.add("weather-icon-rain")
+            contentWeather.textContent = "Rain"
         } else if (weather === "snow") {
             weatherIcon.src = "./assets/snow.gif"
             weatherIcon.classList.add("weather-icon-snow")
+            contentWeather.textContent = "Snow"
         } else if (weather === "clear") {
             weatherIcon.src = "./assets/clear.gif"
             weatherIcon.classList.add("weather-icon-clear")
+            contentWeather.textContent = "Clear"
         } else if (weather === "atmosphere") {
             weatherIcon.src = "./assets/clouds.gif"
             weatherIcon.classList.add("weather-icon-clouds")
+            contentWeather.textContent = "Fog"
         } else if (weather === "drizzle") {
             weatherIcon.src = "./assets/rain.gif"
+            contentWeather.textContent = "Drizzle"
         } else {
             weatherIcon.src = "./assets/thunder.gif"
+            contentWeather.textContent = "Thunder"
         }
         } catch(e) {
             alert("error")
