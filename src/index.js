@@ -103,6 +103,106 @@ const secondBar = () => {
     })
 }
 
+import { getForecast } from "./handlers.js"
+const forecastCard = () => {
+    const forecastBtn = document.querySelector(".forecast-button")
+    forecastBtn.addEventListener("click", async () => {
+        try {
+            const forecastRes = await getForecast()
+            console.log(forecastRes)
+
+            const timezoneOffset = forecastRes.city.timezone
+            const nowCityTimes = (forecastRes.list[0].dt + timezoneOffset) * 1000
+
+            const futureForecasts = forecastRes.list.filter(item => {
+                const forecastTimestamp = (item.dt + timezoneOffset) * 1000
+                return forecastTimestamp > nowCityTimes
+            })
+
+            const next12Hours = futureForecasts.slice(0, 4)
+            console.log(next12Hours)
+
+            const forecastClasses = [
+                '.forecast-temp-first',
+                '.forecast-temp-second',
+                '.forecast-temp-third',
+                '.forecast-temp-fourth'
+            ]
+
+            const timeClasses = [
+                '.forecast-time-first',
+                '.forecast-time-second',
+                '.forecast-time-third',
+                '.forecast-time-fourth'
+            ]
+
+            const iconClasses = [
+                '.forecast-icon-first',
+                '.forecast-icon-second',
+                '.forecast-icon-third',
+                '.forecast-icon-fourth'
+            ]
+
+            forecastClasses.forEach((cls, index) => {
+                const tempDiv = document.querySelector(cls)
+                const timeDiv = document.querySelector(timeClasses[index])
+                const forecastDiv = tempDiv.closest('.forecast-today')
+                const iconImg = document.querySelector(iconClasses[index])
+
+                if (next12Hours[index] && forecastDiv) {
+                    forecastDiv.classList.add('filled')
+                }
+
+                if (tempDiv && next12Hours[index]) {
+                    const forecastTempResults = Math.round(next12Hours[index].main.temp)
+                    tempDiv.textContent = `${forecastTempResults}°`
+                }
+
+                if (timeDiv) {
+                    const forecast = next12Hours[index]
+                    const forecastTimestamp = (forecast.dt + timezoneOffset) * 1000
+
+                    const date = new Date(forecastTimestamp)
+                    const hours = date.getUTCHours()
+                    .toString()
+                    .padStart(2, '0')
+                    const minutes = date.getUTCMinutes()
+                    .toString()
+                    .padStart(2, '0')
+                    timeDiv.textContent = `${hours}:${minutes}`
+                }
+
+                if (iconImg) {
+                    const weatherMain = next12Hours[index].weather[0].main.toLowerCase()
+                    let gifUrl = ''
+
+                    if (weatherMain.includes('cloud')) {
+                        gifUrl = './assets/clouds.gif'
+                    } else if (weatherMain.includes('rain')) {
+                        gifUrl = './assets/rain.gif'
+                    } else if (weatherMain.includes('snow')) {
+                        gifUrl = './assets/snow.gif'
+                    } else if (weatherMain.includes('clear')) {
+                        gifUrl = './assets/clouds.gif'
+                    } else if (weatherMain.includes('drizzle')) {
+                        gifUrl = './assets/rain.gif'
+                    } else if (weatherMain.includes('atmosphere')) {
+                        gifUrl = './assets/clouds.gif'
+                    } else {
+                        gifUrl = './assets/thunder.gif'
+                    }
+
+                    iconImg.src = gifUrl
+                    iconImg.alt = weatherMain
+                }
+            })
+
+        } catch(e) {
+            console.log(e)
+        }
+    })
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    main(), secondBar()
+    main(), secondBar(), forecastCard()
 })
