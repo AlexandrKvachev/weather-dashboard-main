@@ -203,10 +203,11 @@
 }
 
 .forecast-today.filled {
+    min-height: 120px;
     gap: 10px;
 }
 
-.forecast-icon-first, .forecast-icon-second, .forecast-icon-third, .forecast-icon-fourth {
+.forecast-icon {
     width: 60px;
 }
 
