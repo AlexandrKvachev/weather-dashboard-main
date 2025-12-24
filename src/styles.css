@@ -16,7 +16,7 @@
     gap: 10px;
 }
 
-.fetch-button, .cat-button, .forecast-button {
+.fetch-button, .cat-button, .forecast-button, .exchange-button {
     min-height: 35px;
     min-width: 60px;
     border-radius: 20px;
@@ -221,6 +221,31 @@
     color: white;
     height: 300px;
     width: 300px;
+    gap: 20px;
     border-radius: 20px;
+}
+
+.exchange-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    gap: 10px;
+}
+
+.exchange-today {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 5px;
+    gap: 10px;
+    background-color: #202d4b;
+}
+
+.exchange-name {
+    font-weight: bold;
 }
 

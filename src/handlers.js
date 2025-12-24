@@ -18,3 +18,10 @@ export const getForecast = async () => {
     const forecastRes = await fetch(FORECAST_API_URL + "/data/2.5/forecast?lat=51.51138&lon=-0.084039&appid=74aa02f1502c32565edd08223b2e45d8&units=metric")
     return forecastRes.json()
 }
+
+const EXCHANGE_API_URL = 'https://api.freecurrencyapi.com'
+
+export const getExchange = async () => {
+    const exchangeRes = await fetch(EXCHANGE_API_URL + "/v1/latest?apikey=fca_live_3YBRMjNsWX5Wxw91OfpkOvuhAG82TwrCHUmO9Bpq")
+    return exchangeRes.json()
+}

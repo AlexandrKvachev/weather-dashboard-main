@@ -168,6 +168,60 @@ const forecastCard = () => {
     })
 }
 
+import { getExchange } from "./handlers.js"
+const exchangeCard = () => {
+    const exchangeBtn = document.querySelector(".exchange-button")
+    exchangeBtn.addEventListener("click", async () => {
+        try {
+           const exchangeRes = await getExchange()
+            console.log(exchangeRes) 
+
+            
+            const exchangeGenerator = document.querySelector('.exchange-container')
+
+            exchangeGenerator.innerHTML = ''
+
+            const currenciesArray = ['RUB', 'EUR', 'GBP', 'CNY']
+            const currencySymbols = {
+                RUB: '₽',
+                EUR: '€',
+                GBP: '£',
+                CNY: '¥'
+            }
+
+            const rates = exchangeRes.data
+
+            currenciesArray.forEach(currency => {
+                const rate = rates[currency]
+                const currRate = Math.round(rate * 100) / 100
+
+                if (!rate) return
+                const exchangeDiv = document.createElement('div')
+                exchangeDiv.classList.add('exchange-today')
+                const valueDiv = document.createElement('div')
+                valueDiv.classList.add('exchange-value')
+                const exchangeName = document.createElement('div')
+                exchangeName.classList.add('exchange-name')
+                const toUSD = document.createElement('div')
+                toUSD.classList.add('to-USD')
+                exchangeName.textContent = `${currency}`
+                valueDiv.textContent = `${currRate} ${currencySymbols[currency]}`
+                toUSD.textContent = `to USD`
+
+                exchangeDiv.appendChild(exchangeName)
+                exchangeDiv.appendChild(valueDiv)
+                exchangeDiv.appendChild(toUSD)
+                exchangeGenerator.appendChild(exchangeDiv)
+            })
+
+
+
+            
+        }catch(e) {
+            console.log(e)
+        }
+    })
+}
 document.addEventListener("DOMContentLoaded", () => {
-    main(), secondBar(), forecastCard()
+    main(), secondBar(), forecastCard(), exchangeCard()
 })
