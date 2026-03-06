@@ -1,11 +1,11 @@
-import { getWeather} from "./handlers.js"
+import { getForecastOnWeek, getWeather} from "./handlers.js"
 import { getCities } from "./handlers.js"
 import { getForecast } from "./handlers.js"
 import { getCatFact } from "./handlers.js"
 import { getExchange } from "./handlers.js"
 
 let selectedCity = { lat: null, lon: null}
-
+    
     const renderWeather = (res) => {
         console.log(res)
         const location = document.querySelector(".location")
@@ -101,6 +101,77 @@ const secondBar = () => {
     })
 }
 
+const weekForecast = async () => { 
+    try {
+        const weekForecastRes = await getForecastOnWeek(selectedCity.lat, selectedCity.lon)
+        const weekForecastContainer = document.querySelector(".week-forecast-container")
+        console.log(weekForecastContainer)
+
+        weekForecastRes.daily.time.forEach((date, index) => {
+            const weekForecastDiv = document.createElement('div')
+            weekForecastDiv.classList.add('week-date')
+            const TempDiv = document.createElement('div')
+            TempDiv.classList.add('max-temp')
+            const weatherDiv = document.createElement('div')
+            weatherDiv.classList.add('weather')
+            const dailyDate = document.createElement('div')
+            dailyDate.classList.add('date')
+
+
+            const code = weekForecastRes.daily.weathercode[index]
+            const max = weekForecastRes.daily.temperature_2m_max[index]
+            const min = weekForecastRes.daily.temperature_2m_min[index]
+
+            const dateObj = new Date(date)
+            const weekday = new Intl.DateTimeFormat('en-En', {
+                weekday: 'short'
+            }).format(dateObj)
+
+            dailyDate.textContent = weekday
+            weatherDiv.textContent = `${code}`
+            TempDiv.textContent = `${Math.floor(max)}/${Math.floor(min)}`
+
+            const dailyImg = document.createElement('img')
+            dailyImg.classList.add('daily-icon')
+            let gifUrl = './assets/thunder.gif'
+            if (code === 2 || code === 3) {
+                weatherDiv.textContent = 'Clouds'
+                gifUrl = './assets/clouds.gif'
+            } else if (code === 61 || code === 63 || code === 65 || code === 66 || code === 67) {
+                gifUrl = './assets/rain.gif'
+                weatherDiv.textContent = 'Rain'
+            }else if (code === 71 || code === 73 || code === 75 || code === 77) { 
+                gifUrl = './assets/snow.gif'
+                weatherDiv.textContent = 'Snow'
+            }else if (code === 0 || code === 1) {
+                gifUrl = './assets/clear.gif'
+                weatherDiv.textContent = 'Clear'
+            }else if (code === 51 || code === 53 || code === 55 || code === 56 || code === 57) {
+                gifUrl = './assets/rain.gif'
+                weatherDiv.textContent = 'Drizzle'
+           } else if (code === 45 || code === 48) {
+                gifUrl = './assets/clouds.gif'
+                weatherDiv.textContent = 'Fog'
+            } else if (code === 95 || code === 96 || code === 99) {
+                gifUrl = './assets/thunder.gif'
+                weatherDiv.textContent = 'Thunder'
+            }
+
+            dailyImg.src = gifUrl
+
+            weekForecastDiv.appendChild(dailyImg)
+            weekForecastDiv.appendChild(TempDiv)
+            weekForecastDiv.appendChild(dailyDate)
+            weekForecastDiv.appendChild(weatherDiv)
+            weekForecastContainer.appendChild(weekForecastDiv)
+
+        })
+    } catch(e) {
+        alert("error")
+        console.log(e)
+    }
+}
+
 const forecastCard = async () => {
         try {
             const forecastRes = await getForecast(selectedCity.lat, selectedCity.lon)
@@ -135,7 +206,7 @@ const forecastCard = async () => {
             } else if (weatherMain.includes('snow')) {
                 gifUrl = './assets/snow.gif'
             } else if (weatherMain.includes('clear')) {
-                gifUrl = './assets/clouds.gif'
+                gifUrl = './assets/clear.gif'
             } else if (weatherMain.includes('drizzle')) {
                 gifUrl = './assets/rain.gif'
             } else if (weatherMain.includes('atmosphere')) {
@@ -155,7 +226,6 @@ const forecastCard = async () => {
             forecastDiv.appendChild(tempDiv)
 
             forecastGenerator.appendChild(forecastDiv)
-
             })
         } catch(e) {
             console.log(e)
@@ -215,6 +285,8 @@ const exchangeCard = async () => {
     }
 
 
+
+
 const cityInput = () => {
     const input = document.querySelector('.user-input')
     const inputResults = document.querySelector('.result-container')
@@ -234,7 +306,7 @@ const cityInput = () => {
             const res = await getWeather(city.lat, city.lon)
             renderWeather(res)
             forecastCard()
-            getExchange()
+            weekForecast()
         }
     }
     setDefoult()

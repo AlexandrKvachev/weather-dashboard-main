@@ -43,3 +43,10 @@ export const getExchange = async () => {
     const exchangeRes = await fetch(EXCHANGE_API_URL + "/v1/latest?apikey=fca_live_3YBRMjNsWX5Wxw91OfpkOvuhAG82TwrCHUmO9Bpq")
     return exchangeRes.json()
 }
+
+export const getForecastOnWeek = async (lat, lon) => { 
+const forecastOnWeek = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`)
+const data = forecastOnWeek.json()
+console.log(data)
+return data
+}

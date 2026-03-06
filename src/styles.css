@@ -244,6 +244,17 @@
     width: 60px;
 }
 
+.week-forecast-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 300px;
+    
+}
+
+.daily-icon {
+    max-width: 65px;
+    max-height: 65px;
+}
 
 .fourth-bar {
     display: flex;
