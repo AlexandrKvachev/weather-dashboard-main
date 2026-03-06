@@ -1,9 +1,12 @@
 import { getWeather} from "./handlers.js"
-const main = () => {
-    const btn = document.querySelector(".fetch-button")
-    btn.addEventListener("click", async () => {
-        try {
-        const res = await getWeather()
+import { getCities } from "./handlers.js"
+import { getForecast } from "./handlers.js"
+import { getCatFact } from "./handlers.js"
+import { getExchange } from "./handlers.js"
+
+let selectedCity = { lat: null, lon: null}
+
+    const renderWeather = (res) => {
         console.log(res)
         const location = document.querySelector(".location")
         const contentTemp = document.querySelector(".content-temperature")
@@ -70,27 +73,22 @@ const main = () => {
             contentWeather.textContent = "Fog"
         } else if (weather === "drizzle") {
             weatherIcon.src = "./assets/rain.gif"
+            weatherIcon.classList.add("weather-icon-rain")
             contentWeather.textContent = "Drizzle"
         } else {
             weatherIcon.src = "./assets/thunder.gif"
+            weatherIcon.classList.add("weather-icon-thunder")
             contentWeather.textContent = "Thunder"
         }
-        } catch(e) {
-            alert("error")
-            console.log(e)
-        }
-        
-    })
-}
+    }
 
-import { getCatFact } from "./handlers.js"
+
 const secondBar = () => {
     const catBtn = document.querySelector(".cat-button")
     catBtn.addEventListener("click", async () => {
         try {
             const catRes = await getCatFact()
             console.log(catRes)
-
             const factsArray = catRes.data
             const randomIndex = Math.floor(Math.random() * factsArray.length)
             const randomFact = factsArray[randomIndex].fact
@@ -103,12 +101,9 @@ const secondBar = () => {
     })
 }
 
-import { getForecast } from "./handlers.js"
-const forecastCard = () => {
-    const forecastBtn = document.querySelector(".forecast-button")
-    forecastBtn.addEventListener("click", async () => {
+const forecastCard = async () => {
         try {
-            const forecastRes = await getForecast()
+            const forecastRes = await getForecast(selectedCity.lat, selectedCity.lon)
             console.log(forecastRes)
 
             const timezoneOffset = forecastRes.city.timezone
@@ -165,13 +160,10 @@ const forecastCard = () => {
         } catch(e) {
             console.log(e)
         }
-    })
-}
+    }
 
-import { getExchange } from "./handlers.js"
-const exchangeCard = () => {
-    const exchangeBtn = document.querySelector(".exchange-button")
-    exchangeBtn.addEventListener("click", async () => {
+
+const exchangeCard = async () => {
         try {
            const exchangeRes = await getExchange()
             console.log(exchangeRes) 
@@ -220,8 +212,87 @@ const exchangeCard = () => {
         }catch(e) {
             console.log(e)
         }
-    })
+    }
+
+
+const cityInput = () => {
+    const input = document.querySelector('.user-input')
+    const inputResults = document.querySelector('.result-container')
+    let debounceTimer = null
+    let currentRequest = 0
+    let isSelecting = false
+
+    const choosenCity = localStorage.getItem('city')
+    const defoultCity = choosenCity || 'Moscow'
+    const setDefoult = async () => {
+        const cities = await getCities(defoultCity)
+        if (cities.length > 0) {
+            const city = cities[0]
+            input.value = city.name
+            selectedCity.lat = city.lat 
+            selectedCity.lon = city.lon 
+            const res = await getWeather(city.lat, city.lon)
+            renderWeather(res)
+            forecastCard()
+            getExchange()
+        }
+    }
+    setDefoult()
+    input.addEventListener('input', () => {
+        if (isSelecting) return
+
+        const value = input.value.trim()
+        inputResults.innerHTML = ''
+
+        if (!value) {
+            inputResults.style.display = 'none'
+            return
+        }
+
+        clearTimeout(debounceTimer)
+        debounceTimer = setTimeout(async () => {
+            const requestId = ++currentRequest
+
+            try {
+                const cities = await getCities(value)
+
+                if (requestId !== currentRequest) {
+                    inputResults.style.display = 'none'
+                    return
+                }
+
+                inputResults.innerHTML = ''
+                cities.forEach(city => {
+                    const li = document.createElement('li')
+                    li.textContent = city.name
+                    li.onclick = async () => {
+                        isSelecting = true
+                        input.value = city.name
+                        localStorage.setItem('city', input.value)
+                        inputResults.innerHTML = ''
+                        inputResults.style.display = 'none'
+                        isSelecting = false
+                        selectedCity.lat = city.lat
+                        selectedCity.lon = city.lon
+                        try {
+                            const res = await getWeather(city.lat, city.lon)
+                            renderWeather(res)
+                            forecastCard()
+                        } catch(e) {
+                            console.error(e)
+                        }
+                    }
+                    inputResults.appendChild(li)
+                })
+                inputResults.style.display = 'block'
+            } catch (e) {
+                console.error(e)
+            }
+        }, 300)
+    }) 
 }
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    main(), secondBar(), forecastCard(), exchangeCard()
+     secondBar(), exchangeCard(), cityInput()
 })

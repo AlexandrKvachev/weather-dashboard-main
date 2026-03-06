@@ -66,6 +66,29 @@
     width: 100%;
 }
 
+.autocomplete-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 5px;
+}
+
+.user-input {
+    position: absolute;
+}
+
+.result-container {
+  display: none;
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  padding: 3px;
+}
+
+.resoult-container li:hover {
+    background-color: wheat;
+}
+
 .left-info-bar {
     display: flex;
     flex-direction: column;
@@ -108,7 +131,7 @@
 }
 
 .weather-icon-clouds {
-    width: 90px;
+    width: 70px;
     height: 50px;
 }
 
@@ -120,6 +143,16 @@
 .weather-icon-clear {
     width: 40px;
     height: 35px;
+}
+
+.weather-icon-thunder {
+    width: 65px;
+    height: 65px;
+}
+
+.weather-icon-rain {
+    width: 65px;
+    height: 65px;
 }
 
 .wrapper {

@@ -5,9 +5,12 @@
     </head>
    <body>
     <div class="wrapper">
+        <div class="autocomplete-container">
+        <input type="text" class="user-input" placeholder="Enter your city">
+        <ul class="result-container"></ul>
+        </div>
         <div class="top-line">
             <div class="weather-info-bar">
-                <button class="fetch-button">getInfo</button>
                 <div class="location"></div>
                 <div class="date-string">
                     <div class="weekday-day">
@@ -34,13 +37,11 @@
          </div>
             <div class="bottom-line">
                 <div class="forecast-bar">
-                    <button class="forecast-button">getForecast</button>
                     <div class="forecast-12-hours">
                         <div class="forecast-today"></div>
                     </div>
                 </div>
                 <div class="fourth-bar">
-                    <button class="exchange-button">getExchange</button>
                     <div class="exchange-container"></div>
                 </div>
             </div>
