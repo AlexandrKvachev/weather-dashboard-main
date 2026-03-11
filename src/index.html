@@ -5,14 +5,14 @@
     </head>
    <body>
     <div class="wrapper">
-        <div class="autocomplete-container">
+        <div class="main-info-card">
         <input type="text" class="user-input" placeholder="Enter your city">
+        <div class="autocomplete-container">
         <ul class="result-container"></ul>
         </div>
-        <div class="top-line">
             <div class="weather-info-bar">
-                <div class="location"></div>
                 <div class="date-string">
+                    <div class="location"></div>
                     <div class="weekday-day">
                         <div class="weekday-display"></div>
                         <div class="month-display"></div>
@@ -22,30 +22,39 @@
                         <div class="left-info-bar">
                             <div class="content-temperature"></div>
                             <div class="content-temp-range"></div>
+                            <div class="content-weather"></div>
+                            <div class="content-feels-like"></div>
                         </div>
                         <div class="right-info-bar">
                             <img class="weather-icon" src="" alt="">
-                            <div class="content-weather"></div>
-                            <div class="content-feels-like"></div>
+                            <!-- <img class="weather-icon" src="" alt=""> -->
+                            <!-- <div class="content-weather"></div>
+                            <div class="content-feels-like"></div> -->
                     </div>
                 </div>
             </div>
-        <div class="second-bar">
-                <button class="cat-button">getFact</button>
-                <div class="cat-fact"></div>
-            </div>
-         </div>
-            <div class="bottom-line">
-                <div class="forecast-bar">
+            <div class="forecast-bar">
+                <p>Today's forecast</p>
                     <div class="forecast-12-hours">
                         <div class="forecast-today"></div>
                     </div>
                 </div>
+        </div>
+        <div class="forecast-on-week">
+            <p>7-day forecast</p>
+            <div class="week-forecast-container"></div>
+        </div>
+         </div>
+            <div class="second-bar">
+                <button class="cat-button">getFact</button>
+                <div class="cat-fact"></div>
+            </div>
+            <!-- <div class="bottom-line"> -->
                 <div class="fourth-bar">
-                    <div class="week-forecast-container"></div>
+                    <!-- <div class="week-forecast-container"></div> -->
                     <div class="exchange-container"></div>
                 </div>
-            </div>
+            <!-- </div> -->
     </div>
     <script src="index.js" type="module"></script>
    </body>

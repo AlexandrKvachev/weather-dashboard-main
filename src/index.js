@@ -133,36 +133,36 @@ const weekForecast = async () => {
 
             const dailyImg = document.createElement('img')
             dailyImg.classList.add('daily-icon')
-            let gifUrl = './assets/thunder.gif'
+            let imgUrl = './assets/thunder.png'
             if (code === 2 || code === 3) {
                 weatherDiv.textContent = 'Clouds'
-                gifUrl = './assets/clouds.gif'
+                imgUrl = './assets/clouds.png'
             } else if (code === 61 || code === 63 || code === 65 || code === 66 || code === 67) {
-                gifUrl = './assets/rain.gif'
+                imgUrl = './assets/rain.png'
                 weatherDiv.textContent = 'Rain'
             }else if (code === 71 || code === 73 || code === 75 || code === 77) { 
-                gifUrl = './assets/snow.gif'
+                imgUrl = './assets/snow.png'
                 weatherDiv.textContent = 'Snow'
             }else if (code === 0 || code === 1) {
-                gifUrl = './assets/clear.gif'
+                imgUrl = './assets/clear.png'
                 weatherDiv.textContent = 'Clear'
             }else if (code === 51 || code === 53 || code === 55 || code === 56 || code === 57) {
-                gifUrl = './assets/rain.gif'
+                imgUrl = './assets/rain.png'
                 weatherDiv.textContent = 'Drizzle'
            } else if (code === 45 || code === 48) {
-                gifUrl = './assets/clouds.gif'
+                imgUrl = './assets/clouds.png'
                 weatherDiv.textContent = 'Fog'
             } else if (code === 95 || code === 96 || code === 99) {
-                gifUrl = './assets/thunder.gif'
+                imgUrl = './assets/thunder.png'
                 weatherDiv.textContent = 'Thunder'
             }
 
-            dailyImg.src = gifUrl
+            dailyImg.src = imgUrl
 
-            weekForecastDiv.appendChild(dailyImg)
-            weekForecastDiv.appendChild(TempDiv)
             weekForecastDiv.appendChild(dailyDate)
-            weekForecastDiv.appendChild(weatherDiv)
+            weekForecastDiv.appendChild(dailyImg)
+             weekForecastDiv.appendChild(weatherDiv)
+            weekForecastDiv.appendChild(TempDiv)
             weekForecastContainer.appendChild(weekForecastDiv)
 
         })
@@ -198,23 +198,23 @@ const forecastCard = async () => {
             const iconImg = document.createElement('img')
             iconImg.classList.add('forecast-icon')
             const weatherMain = forecast.weather[0].main.toLowerCase()
-            let gifUrl = './assets/thunder.gif'
+            let imgUrl = './assets/thunder.png'
             if (weatherMain.includes('cloud')) {
-                gifUrl = './assets/clouds.gif'
+                imgUrl = './assets/clouds.png'
             } else if (weatherMain.includes('rain')) {
-                gifUrl = './assets/rain.gif'
+                imgUrl = './assets/rain.png'
             } else if (weatherMain.includes('snow')) {
-                gifUrl = './assets/snow.gif'
+                imgUrl = './assets/snow.png'
             } else if (weatherMain.includes('clear')) {
-                gifUrl = './assets/clear.gif'
+                imgUrl = './assets/clear.png'
             } else if (weatherMain.includes('drizzle')) {
-                gifUrl = './assets/rain.gif'
+                imgUrl = './assets/rain.png'
             } else if (weatherMain.includes('atmosphere')) {
-                gifUrl = './assets/clouds.gif'
+                imgUrl = './assets/clouds.png'
             } else {
-                 gifUrl = './assets/thunder.gif'
+                 imgUrl = './assets/thunder.png'
             }
-                iconImg.src = gifUrl
+                iconImg.src = imgUrl
                 iconImg.alt = weatherMain
 
             const tempDiv = document.createElement('div')

@@ -10,10 +10,10 @@
     justify-content: center;
     align-items: center;
     height: 300px;
-    width: 300px;
-    background-color: #141d30;
+    width: 500px;
+    /* background-color: #141d30; */
     border-radius: 20px;
-    gap: 10px;
+    gap: 15px;
 }
 
 .fetch-button, .cat-button, .forecast-button, .exchange-button {
@@ -26,12 +26,14 @@
 
 .location {
     color: white;
-    background-color: #4a5b7e;
+    font-weight: bold;
+    font-size: 30px;
+    gap: 5px;
 }
 
 .date-string {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     color: white;
 }
@@ -40,7 +42,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 10px;
+    /* margin: 10px; */
 }
 
 .weekday-display {
@@ -69,12 +71,18 @@
 .autocomplete-container {
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: absolute;
+    width: 300px;
     padding: 5px;
 }
 
 .user-input {
-    position: absolute;
+    position: relative;
+    display: block;
+    background-color: #141d30;
+    color: white;
+    border: none;
+    outline: none;
 }
 
 .result-container {
@@ -92,21 +100,24 @@
 .left-info-bar {
     display: flex;
     flex-direction: column;
+    flex: 1;
     justify-content: center;
     align-items: start;
     color: white;
     width: 100%;
-    margin: 10px;
+    gap: 5px;
+    /* margin: 10px; */
 }
 
 .right-info-bar {
     display: flex;
+    flex: 1;
     flex-direction: column;
     color: white;
     white-space: nowrap;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    margin: 0 auto;
 }
 
 .content-temperature {
@@ -131,8 +142,8 @@
 }
 
 .weather-icon-clouds {
-    width: 70px;
-    height: 50px;
+    width: 200px;
+    height: 140px;
 }
 
 .weather-icon-snow {
@@ -157,20 +168,31 @@
 
 .wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
 }
 
-.top-line {
+.main-info-card {
     display: flex;
-    flex-direction: row;
-    padding: 20px;
+    flex-direction: column;
     background-color: #060C1A;
     justify-content: space-between;
-    gap: 25px;
-    margin: auto;
-    max-width: 100%;
+    gap: 20px;
+    position: relative;
 }
+
+.forecast-on-week {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: #141d30;
+    color: #95a0b2;
+}
+
 
 .second-bar {
     display: flex;
@@ -210,29 +232,43 @@
     justify-content: center;
     align-items: center;
     background-color: #141d30;
-    color: white;
-    height: 300px;
-    width: 300px;
+    color: #a6b2c6;
+    height: 200px;
+    width: 600px;
     border-radius: 20px;
-    gap: 20px;
+    /* gap: 20px; */
+}
+
+.forecast-bar p {
+    align-self: flex-start;
+    padding-left: 10px;
 }
 
 .forecast-12-hours {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    min-width: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    /* min-width: 100%; */
     gap: 10px;
 }
 
 .forecast-today {
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    background-color: #202d4b;
+    /* border-radius: 10px; */
+    /* background-color: #202d4b; */
+    border-right: 1px solid #59616d;
+    padding-right: 5px;
+}
+
+.forecast-today:last-child {
+    border-right: none;
 }
 
 .forecast-today.filled {
@@ -246,9 +282,44 @@
 
 .week-forecast-container {
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    gap: 6px; 
+}
+
+.week-date {
+    display: flex;
     flex-direction: row;
-    max-width: 300px;
-    
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    /* border-radius: 8px; */
+    background-color: #141d30;
+    border-bottom: 1px solid #7b8493;
+    color: #a8b4c7;
+}
+
+.week-date .date {
+    width: 40px;
+    font-weight: borld;
+}
+
+.week-date .weather {
+    width: 70px;
+    font-size: small;
+    color: #8a9bc4;
+    padding: 5px;
+}
+
+.week-date .max-temp {
+    white-space: nowrap;
+    font-size: small;
+}
+
+.week-date:last-child {
+    border-bottom: none;
 }
 
 .daily-icon {
