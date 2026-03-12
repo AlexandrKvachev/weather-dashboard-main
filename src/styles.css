@@ -11,7 +11,6 @@
     align-items: center;
     height: 300px;
     width: 500px;
-    /* background-color: #141d30; */
     border-radius: 20px;
     gap: 15px;
 }
@@ -42,15 +41,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* margin: 10px; */
 }
 
 .weekday-display {
-    font-size: 30px;
+    font-size: 15px;
+    color: #7d889a;
 }
 
 .month-display {
     font-size: small;
+    color: #7d889a;
 }
 
 .time-display {
@@ -83,6 +83,13 @@
     color: white;
     border: none;
     outline: none;
+    height: 40px;
+    border-radius: 10px;
+    padding: 0 12px;
+}
+
+.user-input::placeholder {
+    color: rgb(99, 99, 99);
 }
 
 .result-container {
@@ -105,8 +112,6 @@
     align-items: start;
     color: white;
     width: 100%;
-    gap: 5px;
-    /* margin: 10px; */
 }
 
 .right-info-bar {
@@ -122,6 +127,7 @@
 
 .content-temperature {
     font-size: 40px;
+    font-weight: 700;
 }
 
 .content-temp-range {
@@ -129,7 +135,7 @@
 }
 
 .content-weather {
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .content-feels-like {
@@ -147,23 +153,23 @@
 }
 
 .weather-icon-snow {
-    width: 60px;
-    height: 60px;
+    width: 200px;
+    height: 140px;
 }
 
 .weather-icon-clear {
-    width: 40px;
-    height: 35px;
+    width: 170px;
+    height: 170px;
 }
 
 .weather-icon-thunder {
-    width: 65px;
-    height: 65px;
+    width: 200px;
+    height: 140px;
 }
 
 .weather-icon-rain {
-    width: 65px;
-    height: 65px;
+    width: 140px;
+    height: 140px;
 }
 
 .wrapper {
@@ -171,7 +177,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .main-info-card {
@@ -236,12 +242,13 @@
     height: 200px;
     width: 600px;
     border-radius: 20px;
-    /* gap: 20px; */
+    gap: 20px;
 }
 
 .forecast-bar p {
     align-self: flex-start;
     padding-left: 10px;
+    color: #8a9bc4;
 }
 
 .forecast-12-hours {
@@ -251,7 +258,6 @@
     align-items: center;
     box-sizing: border-box;
     width: 100%;
-    /* min-width: 100%; */
     gap: 10px;
 }
 
@@ -261,14 +267,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border-radius: 10px; */
-    /* background-color: #202d4b; */
     border-right: 1px solid #59616d;
     padding-right: 5px;
 }
 
 .forecast-today:last-child {
     border-right: none;
+    border-right: 1px solid #060C1A;
 }
 
 .forecast-today.filled {
@@ -295,7 +300,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    /* border-radius: 8px; */
     background-color: #141d30;
     border-bottom: 1px solid #7b8493;
     color: #a8b4c7;
@@ -333,34 +337,41 @@
     justify-content: center;
     align-items: center;
     background-color: #141d30;
-    color: white;
-    height: 300px;
-    width: 300px;
-    gap: 20px;
+    color: #a6b2c6;
+    height: auto;
+    width: 600px;
     border-radius: 20px;
 }
 
-.exchange-container {
+.addit-information {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     min-width: 100%;
-    gap: 10px;
+    gap: 50px;
+    padding: 10px;
 }
 
-.exchange-today {
+.information-today {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    padding: 5px;
     gap: 10px;
-    background-color: #202d4b;
 }
 
-.exchange-name {
+.infromation-value {
+    display: block;
+    color: white;
+}
+
+.information-name {
     font-weight: bold;
 }
 
+.status-icon {
+    width: 64;
+    height: 64;
+}

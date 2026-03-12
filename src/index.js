@@ -47,9 +47,9 @@ let selectedCity = { lat: null, lon: null}
 
 
         location.textContent = `${curLocation} ` 
-        contentFeels.textContent = `feels like ${feels}`
-        contentTemp.textContent = `${temp}°C`
-        contentTempRange.textContent = `High: ${maxRange} Low: ${minRange}` 
+        // contentFeels.textContent = `feels like ${feels}`
+        contentTemp.textContent = `${temp}°`
+        // contentTempRange.textContent = `High: ${maxRange} Low: ${minRange}` 
 
         if (weather === "clouds") {
             weatherIcon.src = "./assets/clouds.gif"
@@ -129,7 +129,7 @@ const weekForecast = async () => {
 
             dailyDate.textContent = weekday
             weatherDiv.textContent = `${code}`
-            TempDiv.textContent = `${Math.floor(max)}/${Math.floor(min)}`
+            TempDiv.textContent = `${Math.floor(max)}/${Math.floor(min)}°C`
 
             const dailyImg = document.createElement('img')
             dailyImg.classList.add('daily-icon')
@@ -152,7 +152,7 @@ const weekForecast = async () => {
            } else if (code === 45 || code === 48) {
                 imgUrl = './assets/clouds.png'
                 weatherDiv.textContent = 'Fog'
-            } else if (code === 95 || code === 96 || code === 99) {
+            } else if (code === 95 || code === 96 || code === 99 || code === 80) {
                 imgUrl = './assets/thunder.png'
                 weatherDiv.textContent = 'Thunder'
             }
@@ -233,56 +233,87 @@ const forecastCard = async () => {
     }
 
 
-const exchangeCard = async () => {
-        try {
-           const exchangeRes = await getExchange()
-            console.log(exchangeRes) 
+const additionInfoCard = async (res) => {
+        try { 
+            console.log('wind', res?.wind)
+            console.log('main', res?.main)
+            const informationGenerator = document.querySelector('.addit-information')
 
-            
-            const exchangeGenerator = document.querySelector('.exchange-container')
+            informationGenerator.innerHTML = ''
 
-            exchangeGenerator.innerHTML = ''
+            const windSpeed = Math.round(res.wind.speed * 3.6)
+            const feelsLike = Math.round(res.main.feels_like)
+            const tempMax = Math.round(res.main.temp_max)
+            const tempMin = Math.round(res.main.temp_min)
 
-            const currenciesArray = ['RUB', 'EUR', 'GBP', 'CNY']
-            const currencySymbols = {
-                RUB: '₽',
-                EUR: '€',
-                GBP: '£',
-                CNY: '¥'
-            }
+            const items = [
+                {icon: './assets/wind.png' ,label: 'Wind', value: `${windSpeed} km/h`},
+                {icon: './assets/thermometer.png', label: 'Feels like', value: `${feelsLike} °C`},
+                {icon: './assets/minMax3.png', label: 'High / Low', value: `${tempMax} / ${tempMin}`}
+            ]
 
-            const rates = exchangeRes.data
+            items.forEach(({icon, label, value}) => {
+                const addInformation = document.createElement('div')
+                addInformation.classList.add('information-today')
 
-            currenciesArray.forEach(currency => {
-                const rate = rates[currency]
-                const currRate = Math.round(rate * 100) / 100
+                const iconImg = document.createElement('img')
+                iconImg.classList.add('status-icon')
+                iconImg.src = icon
+                iconImg.alt = label
 
-                if (!rate) return
-                const exchangeDiv = document.createElement('div')
-                exchangeDiv.classList.add('exchange-today')
+                const labelDiv = document.createElement('div')
+                labelDiv.classList.add('information-name')
+                labelDiv.textContent = label
+
                 const valueDiv = document.createElement('div')
-                valueDiv.classList.add('exchange-value')
-                const exchangeName = document.createElement('div')
-                exchangeName.classList.add('exchange-name')
-                const toUSD = document.createElement('div')
-                toUSD.classList.add('to-USD')
-                exchangeName.textContent = `${currency}`
-                valueDiv.textContent = `${currRate} ${currencySymbols[currency]}`
-                toUSD.textContent = `to USD`
+                valueDiv.classList.add('information-value')
+                valueDiv.textContent = value
 
-                exchangeDiv.appendChild(exchangeName)
-                exchangeDiv.appendChild(valueDiv)
-                exchangeDiv.appendChild(toUSD)
-                exchangeGenerator.appendChild(exchangeDiv)
+                addInformation.appendChild(iconImg)
+                addInformation.appendChild(labelDiv)
+                addInformation.appendChild(valueDiv)
+                informationGenerator.appendChild(addInformation)
             })
-
-
-
-            
-        }catch(e) {
+            }catch(e) {
             console.log(e)
         }
     }
+
+
+
+
+            // const currenciesArray = ['RUB', 'EUR', 'GBP', 'CNY']
+            // const currencySymbols = {
+            //     RUB: '₽',
+            //     EUR: '€',
+            //     GBP: '£',
+            //     CNY: '¥'
+            // }
+
+            // const rates = exchangeRes.data
+
+            // currenciesArray.forEach(currency => {
+            //     const rate = rates[currency]
+            //     const currRate = Math.round(rate * 100) / 100
+
+            //     if (!rate) return
+            //     const exchangeDiv = document.createElement('div')
+            //     exchangeDiv.classList.add('exchange-today')
+            //     const valueDiv = document.createElement('div')
+            //     valueDiv.classList.add('exchange-value')
+            //     const exchangeName = document.createElement('div')
+            //     exchangeName.classList.add('exchange-name')
+            //     const toUSD = document.createElement('div')
+            //     toUSD.classList.add('to-USD')
+            //     exchangeName.textContent = `${currency}`
+            //     valueDiv.textContent = `${currRate} ${currencySymbols[currency]}`
+            //     toUSD.textContent = `to USD`
+
+            //     exchangeDiv.appendChild(exchangeName)
+            //     exchangeDiv.appendChild(valueDiv)
+            //     exchangeDiv.appendChild(toUSD)
+            //     exchangeGenerator.appendChild(exchangeDiv)
+            // })  
 
 
 
@@ -300,11 +331,13 @@ const cityInput = () => {
         const cities = await getCities(defoultCity)
         if (cities.length > 0) {
             const city = cities[0]
-            input.value = city.name
+            input.value = ''
+            input.placeholder = city.name
             selectedCity.lat = city.lat 
             selectedCity.lon = city.lon 
             const res = await getWeather(city.lat, city.lon)
             renderWeather(res)
+            additionInfoCard(res)
             forecastCard()
             weekForecast()
         }
@@ -339,8 +372,8 @@ const cityInput = () => {
                     li.textContent = city.name
                     li.onclick = async () => {
                         isSelecting = true
-                        input.value = city.name
                         localStorage.setItem('city', input.value)
+                        input.value = ''
                         inputResults.innerHTML = ''
                         inputResults.style.display = 'none'
                         isSelecting = false
@@ -350,6 +383,7 @@ const cityInput = () => {
                             const res = await getWeather(city.lat, city.lon)
                             renderWeather(res)
                             forecastCard()
+                            additionInfoCard(res)
                         } catch(e) {
                             console.error(e)
                         }
@@ -366,5 +400,5 @@ const cityInput = () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-     secondBar(), exchangeCard(), cityInput()
+     secondBar(), cityInput()
 })
