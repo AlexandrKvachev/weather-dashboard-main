@@ -46,7 +46,7 @@ export const getExchange = async () => {
 
 export const getForecastOnWeek = async (lat, lon) => { 
 const forecastOnWeek = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`)
-const data = forecastOnWeek.json()
+const data = await forecastOnWeek.json()
 console.log(data)
 return data
 }

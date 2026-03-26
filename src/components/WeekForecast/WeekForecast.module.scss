@@ -1,0 +1,15 @@
+.weekForecast {
+    display: flex;
+    // height: 100%;
+    align-self: stretch;
+    flex-direction: column;
+}
+
+.content {
+    gap: 0;
+}
+
+.card {
+    flex: 1;
+    box-sizing: border-box;
+}

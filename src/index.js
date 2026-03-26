@@ -200,7 +200,7 @@ const forecastCard = async () => {
             const weatherMain = forecast.weather[0].main.toLowerCase()
             let imgUrl = './assets/thunder.png'
             if (weatherMain.includes('cloud')) {
-                imgUrl = './assets/clouds.png'
+                imgUrl = 'assets/clouds.png'
             } else if (weatherMain.includes('rain')) {
                 imgUrl = './assets/rain.png'
             } else if (weatherMain.includes('snow')) {
