@@ -67,9 +67,11 @@
             margin: 0 auto;
 
             .weatherGif {
+                object-fit: contain;
                 width: 200px;
-                height: 140px;
             }
         }
     }
 }
+
+
