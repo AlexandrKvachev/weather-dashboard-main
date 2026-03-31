@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getCities } from "../../handlers";
 import UserInput from "../UserInput/UserInput";
 import SearchDropdown from "./SearchDropdown.jsx"
-import styles from "./CitySearch.module.scss"
 
 const CitySearch = ({ onCitySelect }) => {
     const [inputValue, setInputValue] = useState('')
@@ -39,7 +38,7 @@ const CitySearch = ({ onCitySelect }) => {
     }
 
     return (
-        <div className={styles.searchHolder}>
+        <div>
             <UserInput value={inputValue} onChange={setInputValue}/>
             <SearchDropdown cities={cities} onSelect={isSelect}/>
         </div>

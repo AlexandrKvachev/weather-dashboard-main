@@ -6,12 +6,6 @@ export const getWeather = async (lat, lon) => {
     return res.json()
 }
 
-const CAT_API_URL ='https://catfact.ninja/facts'
-
-export const getCatFact = async () => {
-    const catRes = await fetch (CAT_API_URL)
-    return catRes.json()
-}
 
 const FORECAST_API_URL = 'https://api.openweathermap.org'
 
@@ -37,12 +31,6 @@ export const getCities = async (prefix) => {
     }))
 }
 
-const EXCHANGE_API_URL = 'https://api.freecurrencyapi.com'
-
-export const getExchange = async () => {
-    const exchangeRes = await fetch(EXCHANGE_API_URL + "/v1/latest?apikey=fca_live_3YBRMjNsWX5Wxw91OfpkOvuhAG82TwrCHUmO9Bpq")
-    return exchangeRes.json()
-}
 
 export const getForecastOnWeek = async (lat, lon) => { 
 const forecastOnWeek = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`)
